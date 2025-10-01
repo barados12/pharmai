@@ -1,0 +1,9 @@
+body.dark { background:#0f1115; color:#e6eef6; font-family: "Cairo", sans-serif; margin:0; padding:0; }
+header { background:linear-gradient(90deg,#0b1220,#102033); padding:1rem; display:flex; justify-content:space-between; align-items:center; }
+header h1 { color:#7be6c3; margin:0; font-size:1.4rem; }
+nav a { color:#dbeefd; margin-left:1rem; text-decoration:none; }
+.hero { padding:2rem; text-align:center; }
+input { padding:8px 12px; border-radius:8px; border:1px solid #223144; margin-right:8px; width:60%; }
+button { padding:10px 16px; border-radius:8px; border:none; background:#7be6c3; color:#062022; cursor:pointer; }
+.card { background:#0b1220; border:1px solid #1f2b3a; padding:1rem; border-radius:12px; display:inline-block; margin:1rem; }
+pre { background:#091018; padding:1rem; border-radius:8px; overflow:auto; color:#bfe6ff; }
