@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>PharmaAI</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}&currency=USD"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="dark">
+<header>
+  <h1>PharmaAI</h1>
+  <nav>
+    <span>مرحبًا، {{ current_user.username }}</span>
+    <a href="{{ url_for('dashboard') }}">لوحة التحكم</a>
+    <a href="{{ url_for('logout') }}">خروج</a>
+  </nav>
+</header>
+<main>
+  <section class="hero">
+    <h2>تحليل تفاعلات الأدوية بالذكاء الاصطناعي</h2>
+    <p>ابحث باسم الدواء، احصل على تطابق RxNorm، معلومات ChEMBL، وسجل الشراء عبر PayPal.</p>
+    <form id="searchForm" onsubmit="return doSearch();">
+      <input id="q" placeholder="ابحث عن دواء بالاسم العربي أو الإنجليزي">
+      <button type="submit">بحث</button>
+    </form>
+  </section>
+
+  <section id="results"></section>
+
+  <section class="products">
+    <h3>خدماتنا</h3>
+    <div class="card">
+      <h4>تحليل تفاعلات</h4>
+      <p>تقرير تفصيلي PDF</p>
+      <div id="paypal-button-1"></div>
+      <script>
+        paypal.Buttons({
+          createOrder: function(){ return fetch('/create-order',{method:'post',headers:{'content-type':'application/json'},body:JSON.stringify({amount:25})}).then(r=>r.json()).then(d=>d.id); },
+          onApprove: function(data){ return fetch('/capture-order/'+data.orderID,{method:'post'}).then(r=>r.json()).then(()=>alert('تم الدفع!')); }
+        }).render('#paypal-button-1');
+      </script>
+    </div>
+  </section>
+</main>
+
+<script>
+async function doSearch(){
+  const q = document.getElementById('q').value.trim();
+  if(!q) return false;
+  document.getElementById('results').innerHTML = 'جارٍ البحث...';
+  // RxNav
+  let rx = await fetch(`/api/rxnav/search?q=${encodeURIComponent(q)}`).then(r=>r.json());
+  // ChEMBL
+  let chem = await fetch(`/api/chembl/search?q=${encodeURIComponent(q)}`).then(r=>r.json());
+  let html = `<h4>نتائج RxNav</h4><pre>${JSON.stringify(rx,null,2)}</pre>`;
+  html += `<h4>نتائج ChEMBL</h4><pre>${JSON.stringify(chem,null,2)}</pre>`;
+  document.getElementById('results').innerHTML = html;
+  return false;
+}
+</script>
+</body>
+</html>

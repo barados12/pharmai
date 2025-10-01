@@ -1,0 +1,7 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>Dashboard</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head><body class="dark">
+<h2>لوحة التحكم</h2>
+<p>المستخدمون: {{ users }}</p>
+<p>المبيعات المؤكدة: {{ sales }}</p>
+<p>الإيرادات: {{ revenue }} USD</p>
+<p><a href="{{ url_for('index') }}">الصفحة الرئيسية</a></p>
+</body></html>
