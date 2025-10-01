@@ -1,0 +1,10 @@
+name: Deploy
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: railwayapp/actions/deploy@v1
+      with:
+        railwayToken: ${{ secrets.RAILWAY_TOKEN }}
