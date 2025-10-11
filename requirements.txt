@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+streamlit
+pandas
+numpy
+requests
+scikit-learn
+reportlab
+psycopg2-binary
